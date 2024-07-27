@@ -3,10 +3,14 @@ package ru.itoltec.demoautotestspringboot.pages;
 import org.assertj.core.api.Assertions;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 public class LoginPage extends BasePage {
+
+    @Value("${app.login.url}")
+    private String loginUrl;
 
     @FindBy(xpath = "//input[@name='email']")
     private WebElement email;
@@ -19,6 +23,10 @@ public class LoginPage extends BasePage {
 
     @FindBy(xpath = "//div[contains(@class, 'LoginForm_error_text')]")
     private WebElement loginFormError;
+
+    public void open() {
+        navigateTo(loginUrl);
+    }
 
     public void fillEmail(String email) {
         this.email.sendKeys(email);
